@@ -271,11 +271,13 @@ def request_jamf_token():
 
 
     if USER_ARGS.auth_with_clientID:
-        data = {'client_id': jamf_client_id, 'client_secret': jamf_client_secret,
+
+        api_url = f"{CONFIG['jamf']['url']}/api/oauth/token"
+        data = {'client_id': {CONFIG['jamf']['client_id']}, 'client_secret': {CONFIG['jamf']['client_secret']},
                 "grant_type": "client_credentials"}
         response = requests.post(api_url, 
                                  data=data, 
-                                 verify=user_args.do_not_verify_ssl)
+                                 verify=USER_ARGS.do_not_verify_ssl)
     else: 
         response = api_call(api_url,
                             auth=(CONFIG['jamf']['username'], CONFIG['jamf']['password']),
